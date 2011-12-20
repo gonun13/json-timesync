@@ -1,0 +1,41 @@
+var sampleJSON = {
+	"registrations": 
+	[
+		{
+			"data": 
+			{
+				"id": 1,
+				"barcode": 22132131232, 
+				"name": "Nuno Gomes",
+				"email": "gonun13@gmail.com"									
+			},
+			"services":
+			[
+				{
+					"id": 1,
+					"name": "Registo no Evento"
+				}
+			]
+		},
+		{
+			"data": 
+			{
+				"id": 2,
+				"barcode": 22332131232, 
+				"name": "Domingos Gomes",
+				"email": "gonun13@gmail.com"									
+			},
+			"services":
+			[
+				{
+					"id": 1,
+					"name": "Registo no Evento"
+				},
+				{
+					"id": 2,
+					"name": "Jantar de Gala"
+				}
+			]
+		}
+	] 
+};
