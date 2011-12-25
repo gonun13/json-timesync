@@ -22,6 +22,17 @@ var jsonTimesync = (function(){
     		else if (typeof(json[key]) == 'number' || typeof(json[key]) == 'string')
     		{
     			json[key] = { "ts": currentTimestamp(), "value": json[key] };
+    			json[key].get = function() { 
+    				return this.value; 
+    			}
+    			json[key].getTime = function() { 
+    				return this.ts; 
+    			}
+    			json[key].set = function(newValue) {
+    				this.ts = currentTimestamp(); 
+    				this.value = newValue;
+    				return this.ts;
+    			}
     		}
 		}
 		return json; 
