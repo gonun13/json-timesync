@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<title>convert.test</title>
+		<meta name="description" content="" />
+		<meta name="author" content="Nuno Gomes" />
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+		<script src="../source/json-timesync.js"></script>
+		<script src="sample.json"></script>
+	</head>
+	<body>
+		<div>
+			<header>
+				<h1>set.test</h1>
+				<script>
+					var tsData = jsonTimesync.convert(sampleJSON);
+					setTimeout(function(){run();}, 500);
+					function run() {
+						console.log(tsData.registrations[0].data.name.getTime());			
+						console.log(tsData.registrations[0].data.name.get());
+						console.log(tsData.registrations[0].data.name.set('Nuno Set Test'));
+						console.log(tsData.registrations[0].data.name.get());
+						console.log(tsData.registrations[1].services[1].name.getTime());
+						console.log(tsData.registrations[1].services[1].name.get());
+						console.log(tsData.registrations[1].services[1].name.set('Main Dinner'));
+						console.log(tsData.registrations[1].services[1].name.get());
+					}
+				</script>
+			</header>
+		</div>
+	</body>
+</html>

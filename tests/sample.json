@@ -7,13 +7,13 @@ var sampleJSON = {
 				"id": 1,
 				"barcode": 22132131232, 
 				"name": "Nuno Gomes",
-				"email": "gonun13@gmail.com"									
+				"email": "nuno.gomes@email.me"									
 			},
 			"services":
 			[
 				{
 					"id": 1,
-					"name": "Registo no Evento"
+					"name": "Registration"
 				}
 			]
 		},
@@ -22,18 +22,18 @@ var sampleJSON = {
 			{
 				"id": 2,
 				"barcode": 22332131232, 
-				"name": "Domingos Gomes",
-				"email": "gonun13@gmail.com"									
+				"name": "Queen of Blades",
+				"email": "queen.blades@email.me"									
 			},
 			"services":
 			[
 				{
 					"id": 1,
-					"name": "Registo no Evento"
+					"name": "Registration"
 				},
 				{
 					"id": 2,
-					"name": "Jantar de Gala"
+					"name": "Dinner"
 				}
 			]
 		}
