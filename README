@@ -1,0 +1,13 @@
+CONCEPT
+
+Library to syncronize JSON datasets using timestamps to automatically override conflicting data. It always assumes that the relevant data belonging to someone or update by someone is the most recent.
+This will allow for simple apps from multiple different sources to work independently and still be able to syncronize at the same time without complex logic or time consuming operations.
+Time is kept at key/value level so that each item is synced independently.
+
+SCENARIO
+
+Imagine a room with 4 entry points. At each entry point there is a person with an app validating who is allowed to enter the room. A regular app will validates everything with a central server so that every entry point seems the 
+same data. However, if the connections fails or the server goes down, our access control app is rendered unusable. Chaos ensues. An app using json-timesync can be coded to work independently of a central server by keeping a 
+copy of the relevant data and syncronizing everything once connection/server is restored. Since it overrides based on time, it *should* never fail or create a conflict. A server will be a simple relay for the sync, have 
+other logic for dealing with the data or presenting a interface layer to a user.
+
