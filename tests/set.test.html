@@ -15,10 +15,9 @@
 	<body>
 		<div>
 			<header>
-				<h1>set.test</h1>				
+				<h1>set.test</h1>
 				<script>
-					var jsonTS = new jsonTimesync({json:sampleJSON});
-					tsData = jsonTS.data;
+					var tsData = jsonTimesync.convert(sampleJSON);
 					setTimeout(function(){run();}, 500);
 					function run() {
 						console.log(tsData.registrations[0].data.name.getTime());			

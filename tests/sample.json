@@ -39,5 +39,3 @@ var sampleJSON = {
 		}
 	] 
 };
-
-var sampleJSON_string = JSON.stringify(sampleJSON);
