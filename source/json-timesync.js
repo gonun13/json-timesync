@@ -143,7 +143,7 @@ jsonTimesync.prototype = function(){
 				return this.ts;
 			}
 		};
-	}
+	} 
 	
 	/**
 	 * public methods
