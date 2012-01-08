@@ -2,37 +2,86 @@
  * @author Nuno Gomes
  */
 
-// revealing module pattern
-var jsonTimesync = (function(){	
+// revealing prototype pattern
+var jsonTimesync = function (params){
+	this.configs = {
+		// you can set multiple upstreams and downstreams
+		// equivalent to setting several masters and/or several slaves
+		upstreams: [
+			{"active": false, "url": ""}
+		],
+		downstreams: [
+			{"active": true, "url": "", "create": true, "delete": true}
+		]
+	}
+	// override configs as needed
+    for(param in params)
+    {		    	
+        this.configs[param] = params[param];
+    }
+	this.init(this.configs);
+};
+
+jsonTimesync.prototype = function(){	
+
+	/**
+	 *  inits our instance
+	 * 
+	 * @param params (upstreams, downstreams)
+	 * @return object
+	 */
+	var init = function (params)
+	{
+	    // create json from params or empty if none
+	    if (typeof(params.json) == 'string')
+	    {
+		    try {
+				var json = JSON.parse(params.json);				
+			} catch(e) {
+				return false;
+			}
+		}
+		else if (typeof(params.json) == 'object')
+		{
+			var json = params.json;			
+		}
+		else
+		{
+			var json = {};				
+		}
+		// convert to json-timesync
+		this.data = convertToTimesync(json);
+	}
 	
 	/**
-	 * iterates json object and adds current timestamp to all values
+	 * converts our json object into a json-timesync object
 	 * 
-	 * @param json
+	 * @param data
 	 * @return object
 	 */	
-	function convertToTimesync(json)
+	var convertToTimesync = function (json)
 	{
+		// no json, no fun
+		if (typeof(json) != 'object') return false;
+		// setter for root
+		json.set = function(newKey, newValue) {
+			json[newKey] = transform(newValue);
+		}		
+		// recursive conversion of object
 		for (var key in json) 
-		{ 
+		{
+			// all objects gain a setter to add new data
     		if (typeof(json[key]) == 'object')
-    		{
+    		{    			
+    			json[key].set = function(newKey, newValue) {
+    				json[newKey] = transform(newValue);
+    			}
     			json[key] = convertToTimesync(json[key]);
     		}
+    		// final values gain getters and setters
     		else if (typeof(json[key]) == 'number' || typeof(json[key]) == 'string')
     		{
-    			json[key] = { "ts": currentTimestamp(), "value": json[key] };
-    			json[key].get = function() { 
-    				return this.value; 
-    			}
-    			json[key].getTime = function() { 
-    				return this.ts; 
-    			}
-    			json[key].set = function(newValue) {
-    				this.ts = currentTimestamp(); 
-    				this.value = newValue;
-    				return this.ts;
-    			}
+    			json[key] = transform(json[key]);
     		}
 		}
 		return json; 
@@ -43,7 +92,7 @@ var jsonTimesync = (function(){
 	 * 
 	 * @return int
 	 */
-	function currentTimestamp()
+	var currentTimestamp = function ()
 	{
 		var date = new Date();		
 		return (+formatDate(date));
@@ -55,7 +104,7 @@ var jsonTimesync = (function(){
 	 * @param date
 	 * @return string
 	 */
-	function formatDate(date)
+	var formatDate = function (date)
 	{
 		var year = date.getUTCFullYear();
 		var month = date.getUTCMonth()+1;
@@ -74,7 +123,33 @@ var jsonTimesync = (function(){
 		return year+month+day+hour+minute+second+millisecond;
 	}
 	
+	/**
+	 * transforms a regular json key/pair into a json-timesync object 
+	 */
+	var transform = function(value)
+	{
+		return { 
+			"ts": currentTimestamp(), 
+			"value": value,
+			get: function() { 
+				return this.value; 
+			},
+			getTime: function() { 
+				return this.ts; 
+			},
+			set: function(newValue) {
+				this.ts = currentTimestamp(); 
+				this.value = newValue;
+				return this.ts;
+			}
+		};
+	}
+	
+	/**
+	 * public methods
+	 */
 	return {
+		init: init,
 		convert: convertToTimesync
 	};
-}());
+}();

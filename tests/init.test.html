@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<title>convert.test</title>
+		<meta name="description" content="" />
+		<meta name="author" content="Nuno Gomes" />
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+		<script src="../source/json-timesync.js"></script>
+		<script src="sample.json"></script>
+	</head>
+	<body>
+		<div>
+			<header>
+				<h1>init.test</h1>				
+				<script>
+					// empty init
+					var jsonTS = new jsonTimesync();
+					console.log(jsonTS);										
+					// with configurations
+					var jsonTS1 = new jsonTimesync({
+						"upstreams": [
+							{"active": true, "url": "http://192.168.1.102/projects/json-timesync/tests/downstream.json"},
+							{"active": false, "url": "http://192.168.1.102/projects/json-timesync/tests/downstream.json"}
+						],
+						"downstreams": [
+							{"active": true, "url": "http://192.168.1.102/projects/json-timesync/tests/downstream.json"},
+							{"active": false, "url": "http://192.168.1.102/projects/json-timesync/tests/downstream.json"}
+						]
+					});
+					console.log(jsonTS1);
+					// with data (object)
+					var jsonTS2 = new jsonTimesync({
+						"json": sampleJSON
+					});					
+					console.log(jsonTS2);
+					// with data (string)
+					var jsonTS3 = new jsonTimesync({
+						"json": sampleJSON_string
+					});					
+					console.log(jsonTS3);
+					// with data (bad string)
+					var jsonTS4 = new jsonTimesync({
+						"json": JSON.stringify("invalid json: true")
+					});					
+					console.log(jsonTS4);
+				</script>
+			</header>
+		</div>
+	</body>
+</html>

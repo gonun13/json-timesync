@@ -17,7 +17,8 @@
 			<header>
 				<h1>get.test</h1>
 				<script>
-					var tsData = jsonTimesync.convert(sampleJSON);
+					var jsonTS = new jsonTimesync({json:sampleJSON});
+					tsData = jsonTS.data;
 					console.log(tsData.registrations[0].data.name.getTime());			
 					console.log(tsData.registrations[0].data.name.get());
 					console.log(tsData.registrations[1].services[1].name.getTime());
