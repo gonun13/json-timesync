@@ -16,7 +16,10 @@
 		<div>
 			<header>
 				<h1>convert.test</h1>
-				<script>console.log(jsonTimesync.convert(sampleJSON));</script>
+				<script>					
+					jsonTs = new jsonTimesync({json: sampleJSON})
+					console.log(jsonTs.data);
+				</script>
 			</header>
 		</div>
 	</body>
