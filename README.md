@@ -26,4 +26,9 @@ other logic for dealing with the data.
 	
 	* DELETE
 	If a downstream sync has data missing from your current dataset, it will be remove from it. This can be disabled. For example, you might have an instance of the app running on a central server and that copy is the only 
-	one allowed to delete data. If disabled, data that has been removed might become available again if the the upstream is active for syncing other apps. 
+	one allowed to delete data. If disabled, data that has been removed might become available again if the the upstream is active for syncing other apps.
+	
+# TODO
+
+- Prevent timesync objects to get inside other timesync objects
+- Clone new items to prevent reference 
