@@ -19,6 +19,7 @@
 				<script>
 					var jsonTS = new jsonTimesync({json:sampleJSON});
 					tsData = jsonTS.data;
+					// test update (value and timestamp)
 					setTimeout(function(){run();}, 500);
 					function run() {
 						console.log(tsData.registrations[0].data.name.getTime());			
@@ -30,6 +31,36 @@
 						console.log(tsData.registrations[1].services[1].name.set('Main Dinner'));
 						console.log(tsData.registrations[1].services[1].name.get());
 					}
+					// test adding root number					
+					tsData.set("number", 13);
+					console.log(tsData);
+					// test adding root string					
+					tsData.set("string", "le string");
+					console.log(tsData);
+					// test adding root json
+					var configs = {'lang':'pt'};
+					tsData.set("configs", configs);
+					console.log(tsData);
+					// test adding root array
+					var langs = ['en', 'pt', 'es', 'fr', 'de', 'jp'];
+					tsData.set("langs", langs);
+					console.log(tsData);
+					// test adding number					
+					tsData.configs.set("number", 13);
+					console.log(tsData);
+					// test adding string				
+					tsData.configs.set("string", "le string");
+					console.log(tsData);
+					// test adding json
+					var extras = {'mine':'bigger'};
+					tsData.configs.set("extras", extras);
+					console.log(tsData);
+					// test adding array
+					var planets = ['mars', 'earth', 'jupiter'];
+					tsData.configs.set("planets", planets);
+					console.log(tsData);
+					// test adding TO array
+					tsData.langs.set('it');
 				</script>
 			</header>
 		</div>

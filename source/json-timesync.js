@@ -56,7 +56,7 @@ jsonTimesync.prototype = function(){
 	/**
 	 * converts our json object into a json-timesync object
 	 * 
-	 * @param data
+	 * @param json
 	 * @return object
 	 */	
 	var convertToTimesync = function (json)
@@ -65,8 +65,16 @@ jsonTimesync.prototype = function(){
 		if (typeof(json) != 'object') return false;
 		// setter for root
 		json.set = function(newKey, newValue) {
-			json[newKey] = transform(newValue);
-		}		
+			// push for arrays
+			if (!newValue)
+			{
+				this.push(transform(newKey));
+			}
+			else
+			{						
+				json[newKey] = transform(newValue);
+			}
+		}
 		// recursive conversion of object
 		for (var key in json) 
 		{
@@ -74,7 +82,15 @@ jsonTimesync.prototype = function(){
     		if (typeof(json[key]) == 'object')
     		{    			
     			json[key].set = function(newKey, newValue) {
-    				json[newKey] = transform(newValue);
+    				// push for arrays
+    				if (!newValue)
+    				{
+    					this.push(transform(newKey));
+    				}
+    				else
+    				{
+    					json[newKey] = transform(newValue);
+    				}
     			}
     			json[key] = convertToTimesync(json[key]);
     		}
@@ -124,10 +140,18 @@ jsonTimesync.prototype = function(){
 	}
 	
 	/**
-	 * transforms a regular json key/pair into a json-timesync object 
+	 * transforms a regular json key/pair into a json-timesync object
+	 * 
+	 * @param value
+	 * @return mixed
 	 */
 	var transform = function(value)
 	{
+		// objects get sent back for recursive passes
+		if (typeof(value) == 'object') {
+			return convertToTimesync(value);
+		}
+		// normal values are transformed
 		return { 
 			"ts": currentTimestamp(), 
 			"value": value,
